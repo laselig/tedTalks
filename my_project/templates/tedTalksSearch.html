@@ -1,0 +1,102 @@
+{% extends "generic.html" %}
+
+{% block title %}
+	<h2> Ted Talks</h2>
+{% endblock %}
+
+
+{% block tedTalks %}
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body text-center">
+                <img class="img-responsive" src="#"/>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section>	
+	<hr>
+		<input type="text" id="ttsSearch" onkeyup="filterTTsHeadline()" placeholder="Search all {{tedTalks|length}} ted talks for headlines containing..">
+
+	<hr>
+	<div style="height:450px;overflow:auto;">
+
+		<div class = "table-wrapper">	
+
+			<table class = "alt" id = "allTedTalks">
+								<tr>
+					<th style="text-align:center"> URL </th>
+					<th style="text-align:center"> Published </th>
+					<th style="text-align:center"> Speaker </th>
+					<th style="text-align:center"> Headline </th>
+					<th style="text-align:center"> Duration </th>
+					<th style="text-align:center"> Transcript </th>
+
+				</tr>
+
+				<tbody>
+					{% for tt in tedTalks %}
+						<tr>
+							<td align = "center"> 
+							    <a href="{{tt[1]}}" class = "button small alt"> Ted Talk </a>
+							</td>
+
+							<td> {{tt[8]}} </td>
+							<td> {{tt[2]}} </td>
+							<td> {{tt[3]}} </td>
+							<td> {{tt[6]}} </td>
+							<!-- <td> {{tt[-1]}} </td> -->
+							<td align = "center"> 
+							    <a href="{{ url_for('transcript', id = tt[0], searchTerm = searchTerm) }}" class = "button small alt"> Transcript </a>
+							</td>
+
+
+
+
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</section>
+
+<hr>
+
+<script>
+
+function filterTTsHeadline() {
+  // Declare variables 
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("ttsSearch");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("allTedTalks");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+}
+</script>
+
+{% endblock %}
+

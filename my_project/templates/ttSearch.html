@@ -1,0 +1,31 @@
+
+<!-- source: https://templated.co/items/demos/retrospect/generic.html -->
+
+<!-- extend generic layout -->
+{% extends "generic.html" %}
+
+{% block title %}
+  <h2> Search Ted Talk Transcripts </h2>
+{% endblock %}
+
+
+
+{% block tedTalksSearchTranscript %}
+<div class = "container">
+  <form method="post" name = "ttSearch">
+      {{ form.hidden_tag() }}
+      <p>
+          <br>
+          <div class="4u 12u$(xsmall)">
+            {{ form.ted_talk(placeholder="Search for ted talks with transcripts containing..") }}
+          </div>
+          {% for error in form.ted_talk.errors %}
+              <span style="color: red;">{{ error }}</span>
+          {% endfor %}
+      </p>
+
+      <input type="submit" value="Search">
+
+  </form>
+</div>
+{% endblock %}
